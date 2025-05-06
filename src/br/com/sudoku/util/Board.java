@@ -7,7 +7,7 @@ package br.com.sudoku.util;
  */
 public final class Board {
 
-    private BoardTemplate() {}
+    private Board() {}
 
     public final static String BOARD_TEMPLATE =
             """
