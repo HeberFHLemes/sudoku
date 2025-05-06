@@ -76,6 +76,7 @@ public class Main {
 
             // Formar os quadrados de cada linha com os args passados no main
             for (int j = 0; j < BOARD_LIMIT; j++){
+
                 // Valor recebido do Map positions referente a valor esperado (expected) e booleano fixo (fixed)
                 var positionConfig = positions.get("%s,%s".formatted(i, j));
 
@@ -92,11 +93,11 @@ public class Main {
                 squares.get(i).add(current);
             }
 
-            // Novo tabuleiro para este jogo instanciado
-            board = new GameBoard(squares);
-
-            System.out.println("O jogo está pronto para começar. ");
         }
+        // Novo tabuleiro para este jogo instanciado
+        board = new GameBoard(squares);
+
+        System.out.println("O jogo está pronto para começar. ");
 
     }
 
@@ -110,7 +111,7 @@ public class Main {
 
         // Perguntar pela linha
         System.out.println("Informe a linha (0-8) onde será inserido o valor desejado: ");
-        var row = getValidNumber(scanner, 0, 8);
+        var row = getValidNumber(scanner, 1, 8);
 
         // Perguntar pela coluna
         System.out.println("Informe a coluna (0-8) onde será inserido o valor desejado: ");
@@ -130,7 +131,7 @@ public class Main {
     // Remover um valor em uma coordenada específica, se não for fixo.
     private static void removeNumber(Scanner scanner) {
         if (isNull(board)){
-            System.out.println("O jogo ainda não foi iniciado iniciado");
+            System.out.println("O jogo ainda não foi iniciado. ");
             return;
         }
 
@@ -151,32 +152,32 @@ public class Main {
     // Informar situação atual do jogo.
     private static void showCurrentGame() {
         if (isNull(board)){
-            System.out.println("O jogo ainda não foi iniciado iniciado");
+            System.out.println("O jogo ainda não foi iniciado. ");
             return;
         }
 
         // Matriz relativa ao tabuleiro
-        var args = new Object[81];
+        var squares = new Object[81];
 
         // Começando do primeiro elemento
-        var argPos = 0;
+        var squarePosition = 0;
 
         // Loop pela matriz, mostrando o valor ou espaço em cada quadrado.
-        for (int i = 0; i < BOARD_LIMIT; i++) {
-            for (var row: board.getSquares()){
-                args[argPos ++] = " " + ((isNull(row.get(i).getActual())) ? " " : row.get(i).getActual());
+        for (var row: board.getSquares()) {
+            for (var square : row){
+                squares[squarePosition ++] = " " + ((isNull(square.getActual())) ? " " : square.getActual());
             }
         }
 
         // Imprimir resultado
         System.out.println("Seu jogo se encontra da seguinte forma: ");
-        System.out.printf((BOARD_TEMPLATE) + "\n", args);
+        System.out.printf((BOARD_TEMPLATE) + "\n", squares);
     }
 
     // Informar status do jogo (enums de GameStatusEnum).
     private static void showGameStatus() {
         if (isNull(board)){
-            System.out.println("O jogo ainda não foi iniciado iniciado");
+            System.out.println("O jogo ainda não foi iniciado. ");
             return;
         }
 
@@ -194,11 +195,11 @@ public class Main {
     // Limpar valores inseridos pelo usuário, preservando os fixos.
     private static void clearGame(Scanner scanner) {
         if (isNull(board)){
-            System.out.println("O jogo ainda não foi iniciado iniciado");
+            System.out.println("O jogo ainda não foi iniciado. ");
             return;
         }
 
-        // Mensagem de confimação da escolha de limpar o jogo
+        // Mensagem de confirmação da escolha de limpar o jogo
         System.out.println("Tem certeza que deseja limpar seu jogo e perder todo seu progresso?");
         System.out.println("[1] - SIM]");
         System.out.println("[0] - NÃO]");
@@ -206,14 +207,31 @@ public class Main {
         int option;
         option = getOption(scanner);
 
-        // Uso de reset para limpar os valores inseridos pelo usuário
+        // Uso de reset para limpar os valores inseridos pelo usuário.
         if (option == 1) board.reset();
     }
 
     // Se completo e sem erros, finalizar, se não, informar impossibilidade de conclusão do jogo.
     private static void finishGame() {
+        if (isNull(board)){
+            System.out.println("O jogo ainda não foi iniciado. ");
+            return;
+        }
+
+        if (board.gameFinished()){
+            System.out.println("Parabéns! Jogo concluído com sucesso!");
+            showCurrentGame();
+            board = null;
+            System.out.println("Obrigado por jogar!");
+            return;
+        } else if (board.hasErrors()){
+            System.out.println("Existem erros no jogo, verifique novamente e ajuste o tabuleiro para concluir. ");
+            return;
+        }
+        System.out.println("Ainda há espaço(s) em branco... Complete o tabuleiro e tente novamente. ");
     }
 
+    // Utilizado em menus interativos para escolher as opções com um número.
     private static int getOption(Scanner scanner){
         int option;
         try {
@@ -224,7 +242,8 @@ public class Main {
         return option;
     }
 
-    private static int getValidNumber(Scanner scanner, final int max, final int min){
+    // Utilizado para perguntar por valor inteiro válido, entre min e max.
+    private static int getValidNumber(Scanner scanner, final int min, final int max){
         var current = scanner.nextInt();
         while (current < min || current > max){
             System.out.printf("Informe um número entre %s e %s.\n", min, max);

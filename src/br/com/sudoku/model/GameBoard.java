@@ -1,7 +1,5 @@
 package br.com.sudoku.model;
 
-import br.com.sudoku.util.Board;
-
 import java.util.Collection;
 import java.util.List;
 
