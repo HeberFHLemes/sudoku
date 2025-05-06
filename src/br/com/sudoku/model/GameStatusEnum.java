@@ -8,7 +8,7 @@ public enum GameStatusEnum {
 
     private String status;
 
-    private GameStatusEnum(String status){
+    GameStatusEnum(String status){
         this.status = status;
     }
 

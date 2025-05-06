@@ -19,6 +19,7 @@ public class Main {
     private final static int BOARD_LIMIT = 9;
 
     public static void main(String[] args) {
+
         // Uso do args para montar as posições iniciais e valores esperados
         final var positions = Stream.of(args)
                 .collect(toMap(
@@ -53,13 +54,13 @@ public class Main {
                     case 0 -> System.exit(0);
                     default -> System.out.println("Opção inválida, selecione uma das opções do menu");
                 }
-
             }
         }
     }
 
     // Iniciar novo jogo.
     private static void startGame(Map<String, String> positions) {
+
         // Se o tabuleiro/board não for nulo, informar que o jogo já foi iniciado
         if (nonNull(board)){
             System.out.println("O jogo já foi iniciado. ");
@@ -103,6 +104,7 @@ public class Main {
 
     // Permitir inserção de um número em uma coordenada, se já não tiver outro número.
     private static void inputNumber(Scanner scanner) {
+
         // Verificar se o jogo ainda não foi iniciado
         if (isNull(board)){
             System.out.println("O jogo ainda não foi iniciado. ");
@@ -111,7 +113,7 @@ public class Main {
 
         // Perguntar pela linha
         System.out.println("Informe a linha (0-8) onde será inserido o valor desejado: ");
-        var row = getValidNumber(scanner, 1, 8);
+        var row = getValidNumber(scanner, 0, 8);
 
         // Perguntar pela coluna
         System.out.println("Informe a coluna (0-8) onde será inserido o valor desejado: ");
@@ -130,6 +132,7 @@ public class Main {
 
     // Remover um valor em uma coordenada específica, se não for fixo.
     private static void removeNumber(Scanner scanner) {
+
         if (isNull(board)){
             System.out.println("O jogo ainda não foi iniciado. ");
             return;
@@ -151,6 +154,7 @@ public class Main {
 
     // Informar situação atual do jogo.
     private static void showCurrentGame() {
+
         if (isNull(board)){
             System.out.println("O jogo ainda não foi iniciado. ");
             return;
@@ -176,6 +180,7 @@ public class Main {
 
     // Informar status do jogo (enums de GameStatusEnum).
     private static void showGameStatus() {
+
         if (isNull(board)){
             System.out.println("O jogo ainda não foi iniciado. ");
             return;
@@ -194,6 +199,7 @@ public class Main {
 
     // Limpar valores inseridos pelo usuário, preservando os fixos.
     private static void clearGame(Scanner scanner) {
+
         if (isNull(board)){
             System.out.println("O jogo ainda não foi iniciado. ");
             return;
@@ -213,6 +219,7 @@ public class Main {
 
     // Se completo e sem erros, finalizar, se não, informar impossibilidade de conclusão do jogo.
     private static void finishGame() {
+
         if (isNull(board)){
             System.out.println("O jogo ainda não foi iniciado. ");
             return;
@@ -233,22 +240,28 @@ public class Main {
 
     // Utilizado em menus interativos para escolher as opções com um número.
     private static int getOption(Scanner scanner){
+
         int option;
+
         try {
             option = Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e){
             option = -1;
         }
+
         return option;
     }
 
     // Utilizado para perguntar por valor inteiro válido, entre min e max.
     private static int getValidNumber(Scanner scanner, final int min, final int max){
+
         var current = scanner.nextInt();
+
         while (current < min || current > max){
             System.out.printf("Informe um número entre %s e %s.\n", min, max);
             current = scanner.nextInt();
         }
+
         return current;
     }
 }
