@@ -9,6 +9,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Color;
 
 import static br.com.sudoku.service.EventEnum.CLEAR_SPACE;
 import static java.awt.Font.PLAIN;
@@ -57,7 +58,6 @@ public class NumberText extends JTextField implements EventListener {
                 }
                 square.setActual(Integer.parseInt(getText()));
             }
-
         });
     }
 

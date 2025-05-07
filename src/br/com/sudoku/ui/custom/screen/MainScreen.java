@@ -39,17 +39,17 @@ public class MainScreen {
         this.notifierService = new NotifierService();
     }
 
-    public void buildScreen(){
+    public void buildMainScreen(){
 
         JPanel mainPanel = new MainPanel(dimension);
         JFrame mainFrame = new MainFrame(dimension, mainPanel);
 
-        // Loop para montar com os respectiovs quadrados (de 3 em 3)
+        // Loop para montar com os respectivos quadrados (de 3 em 3)
         for (int row = 0; row < 9; row += 3) {
             var endRow = row + 2;
             for (int column = 0; column < 9; column += 3) {
                 var endCol = column + 2;
-                var squares = getSquaresFromSector(boardService.getSquares(), column, endCol, row, endRow);
+                var squares = getSquaresFromSector(boardService.getSquares(), row, endRow, column, endCol);
                 JPanel sector = generateSection(squares);
                 mainPanel.add(sector);
             }
@@ -86,7 +86,6 @@ public class MainScreen {
         return new SudokuSector(fields);
 
     }
-
 
     private void addFinishGameButton(JPanel mainPanel) {
         finishGameButton = new FinishGameButton(e -> {
