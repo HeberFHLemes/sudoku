@@ -7,10 +7,8 @@ import br.com.sudoku.ui.custom.input.NumberText;
 import br.com.sudoku.ui.custom.frame.MainFrame;
 import br.com.sudoku.ui.custom.panel.*;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +88,7 @@ public class MainScreen {
     private void addFinishGameButton(JPanel mainPanel) {
         finishGameButton = new FinishGameButton(e -> {
             if (boardService.gameFinished()){
-                showMessageDialog(null, "Parabéns você concluiu o jogo! ");
+                showMessageDialog(null, "Parabéns! Você concluiu o jogo! ");
                 resetButton.setEnabled(false);
                 checkGameStatusButton.setEnabled(false);
                 finishGameButton.setEnabled(false);
